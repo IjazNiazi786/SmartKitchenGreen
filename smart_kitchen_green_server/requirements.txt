@@ -1,0 +1,13 @@
+Django~=4.2.13
+dj-rest-auth
+drf-yasg
+django-cors-headers
+djangorestframework
+django-allauth
+django-notifications-hq
+openmeteo_requests
+pandas
+setuptools
+joblib
+requests_cache
+retry_requests

@@ -1,0 +1,199 @@
+{% extends 'base.html' %}
+
+{% block title %}API Documentation - SmartKitchenGreen{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center">API Documentation</h1>
+
+    <p>
+    <a href="{% url 'website:api' %}"> access api view
+       </a>
+    </p>
+
+    <section id="introduction" class="my-4">
+        <h2>Introduction</h2>
+        <p>
+            Welcome to the SmartKitchenGreen API documentation. This page provides details about the available API endpoints, their usage, and examples. Our APIs allow you to seamlessly integrate with the SmartKitchenGreen system, enabling efficient kitchen and garden management.
+        </p>
+    </section>
+
+    <section id="authentication" class="my-4">
+        <h2>Authentication</h2>
+        <p>
+            All API requests require authentication. You must include a valid token in the Authorization header of each request.
+        </p>
+        <pre><code>Authorization: Bearer &lt;your_token&gt;</code></pre>
+    </section>
+
+    <section id="endpoints" class="my-4">
+        <h2>API Endpoints</h2>
+
+        <h3>1. Registration and User Login</h3>
+        <h4>1.1 Register User</h4>
+        <p>Endpoint to register a new user.</p>
+        <pre><code>POST /api/accounts/register/</code></pre>
+        <p>Request Body:</p>
+        <pre><code>{
+    "email": "user@example.com",
+    "password": "password123"
+}</code></pre>
+        <p>Response:</p>
+        <pre><code>{
+    "id": 1,
+    "email": "user@example.com",
+    "verification_code": "1234"
+}</code></pre>
+
+        <h4>1.2 Verify Email</h4>
+        <p>Endpoint to verify the user's email with a verification code.</p>
+        <pre><code>POST /api/accounts/verify-email/</code></pre>
+        <p>Request Body:</p>
+        <pre><code>{
+    "email": "user@example.com",
+    "verification_code": "1234"
+}</code></pre>
+        <p>Response:</p>
+        <pre><code>{
+    "status": "success",
+    "message": "Email verified successfully."
+}</code></pre>
+
+        <h4>1.3 Login User</h4>
+        <p>Endpoint to log in a user and retrieve a token.</p>
+        <pre><code>POST /api/accounts/login/</code></pre>
+        <p>Request Body:</p>
+        <pre><code>{
+    "email": "user@example.com",
+    "password": "password123"
+}</code></pre>
+        <p>Response:</p>
+        <pre><code>{
+    "token": "your_token_here"
+}</code></pre>
+
+        <h3>2. Integrated Grocery Assistant</h3>
+        <h4>2.1 List Grocery Items</h4>
+        <p>Endpoint to list all grocery items.</p>
+        <pre><code>GET /api/grocery/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "id": 1,
+        "name": "Milk",
+        "expiry_date": "2024-06-20"
+    },
+    {
+        "id": 2,
+        "name": "Bread",
+        "expiry_date": "2024-06-15"
+    }
+]</code></pre>
+
+        <h4>2.2 Add Grocery Item</h4>
+        <p>Endpoint to add a new grocery item.</p>
+        <pre><code>POST /api/grocery/</code></pre>
+        <p>Request Body:</p>
+        <pre><code>{
+    "name": "Eggs",
+    "expiry_date": "2024-06-30"
+}</code></pre>
+        <p>Response:</p>
+        <pre><code>{
+    "id": 3,
+    "name": "Eggs",
+    "expiry_date": "2024-06-30"
+}</code></pre>
+
+        <h3>3. Expiry Date Notifications</h3>
+        <h4>3.1 Get Expiry Notifications</h4>
+        <p>Endpoint to get notifications for items nearing expiry.</p>
+        <pre><code>GET /api/notifications/expiry/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "id": 1,
+        "name": "Bread",
+        "expiry_date": "2024-06-15",
+        "days_left": 5
+    }
+]</code></pre>
+
+        <h3>4. Kitchen Appliance</h3>
+        <h4>4.1 List Appliances</h4>
+        <p>Endpoint to list all connected kitchen appliances.</p>
+        <pre><code>GET /api/appliances/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "id": 1,
+        "name": "Oven",
+        "brand": "BrandName"
+    },
+    {
+        "id": 2,
+        "name": "Refrigerator",
+        "brand": "BrandName"
+    }
+]</code></pre>
+
+        <h3>5. Recipe Recommender</h3>
+        <h4>5.1 Get Recipe Suggestions</h4>
+        <p>Endpoint to get recipe suggestions based on current inventory.</p>
+        <pre><code>GET /api/recipes/suggestions/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "id": 1,
+        "name": "Pancakes",
+        "ingredients": ["Milk", "Eggs", "Flour"],
+        "video_url": "http://example.com/recipe/pancakes"
+    }
+]</code></pre>
+
+        <h3>6. Vegetable Garden Planning</h3>
+        <h4>6.1 Plan Vegetable Garden</h4>
+        <p>Endpoint to plan a vegetable garden layout.</p>
+        <pre><code>POST /api/garden/plan/</code></pre>
+        <p>Request Body:</p>
+        <pre><code>{
+    "layout": "4x4",
+    "vegetables": ["Tomatoes", "Carrots", "Lettuce"]
+}</code></pre>
+        <p>Response:</p>
+        <pre><code>{
+    "status": "success",
+    "message": "Garden plan saved."
+}</code></pre>
+
+        <h3>7. Digital Care Calendar</h3>
+        <h4>7.1 Get Care Calendar</h4>
+        <p>Endpoint to get a digital care calendar for garden maintenance.</p>
+        <pre><code>GET /api/garden/calendar/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "date": "2024-06-10",
+        "task": "Water plants"
+    },
+    {
+        "date": "2024-06-15",
+        "task": "Fertilize soil"
+    }
+]</code></pre>
+
+        <h3>8. Plant Care Information</h3>
+        <h4>8.1 Get Plant Care Info</h4>
+        <p>Endpoint to get detailed plant care information.</p>
+        <pre><code>GET /api/plants/care/</code></pre>
+        <p>Response:</p>
+        <pre><code>[
+    {
+        "plant": "Tomato",
+        "watering_schedule": "Every 2 days",
+        "nutrition_needs": "High"
+    }
+]</code></pre>
+    </section>
+</div>
+{% endblock %}
